@@ -2,5 +2,84 @@
 <div><a (click)="drinkClicked()" >Drink</a></div>
 <div *ngIf="!isLogged">basket</div>
 
-<div *ngIf="type ==='food'"> it is food</div>
-<div *ngIf="type ==='drink'"> it is drink</div>
+                                                            <!--for food-->
+<div *ngIf="type ==='food'"> it is food
+
+<ul>
+  <li *ngFor=" let typeF of typeFood">
+    {{typeF.type}}
+
+    <button (click)="deleteTypeFood(typeF.type)"> Delete</button>
+    <button (click)="showEditInputFood(typeF)"> Edit</button>
+  </li>
+</ul>
+
+<div *ngIf="showEditDiv">
+  <form #editTypeFoodForm = 'ngForm' (ngSubmit)="editTypeFood()">
+    <input type="text"
+    #type
+    name="type"
+    [(ngModel)]="newTypeFood.type">
+    <button type="submit">Ok</button>
+  </form>
+</div>
+</div>
+
+                                                             <!-- FOR DRINK-->
+<div *ngIf="type ==='drink'"> it is drink
+<ul>
+  <li *ngFor="let typeD of typeDrink">
+    {{typeD.type}}
+    <button (click)="deleteTypeDrink(typeD.type)">Delete</button>
+    <button (click)="showEditInputDrink(typeD)">Edit</button>
+  </li>
+</ul>
+
+  <div *ngIf="showEditDiv">
+    <form #editTypeDrinkForm = 'ngForm' (ngSubmit)="editTypeDrin()">
+      <input type="text"
+      #type
+      name="type"
+      [(ngModel)]="newTypeDrink.type">
+      <button type=" submit">Ok</button>
+    </form>
+  </div>
+</div>
+
+                                            <!--ITAR FOR FOOD AND DRINK-->
+
+<ul *ngIf="showDrinkAndFood">
+  <li *ngFor="let itarDrink of drink">
+    {{itarDrink.name}}
+    {{itarDrink.degrees}}
+    {{itarDrink.ingredients}}
+    {{itarDrink.price}}
+    {{itarDrink.volume}}
+    {{itarDrink.about}}
+
+  </li>
+  <li *ngFor="let itarFood of food">
+    {{itarFood.name}}
+    {{itarFood.ingredients}}
+    {{itarFood.price}}
+    {{itarFood.weight}}
+    {{itarFood.about}}
+  </li>
+</ul>
+
+                                       <!--ADD NEW TYPE DRINK OR FOOD-->
+
+<button *ngIf="isLogged && !showAddTypeForm && showButtonAddType" (click)="openInputAddType"> Add type</button>
+<form>
+  <label>Name:</label>
+  <input type="text"
+  #type
+  name="type"
+  ngModel
+   required
+  >
+  <button
+  type="submit"
+  [disabled] = 'addTypeForm.invalid'> Send</button>
+  <button (click)="closeForm()">Cancel</button>
+</form>
